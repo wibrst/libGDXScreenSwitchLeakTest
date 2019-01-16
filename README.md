@@ -1,9 +1,9 @@
 # libGDXScreenSwitchLeakTest
 libGDX Learning project. It just for test memory leak while switch two empty screen
 
-test platform: Android
+## Test platform: Android
 
-two main class:
+## Two main class:
 
 ### public class ScreenSwitchLeakTest extends Game 
 Screen switch flow: VERY_BEGIN -> MENU_SCREEN -> EMPTY_SCREEN   
@@ -17,5 +17,5 @@ Main resources process: AssetsHolder.i().init( new AssetManager( ) );
 It will load a ttf font,and display nothing.
 And dispose() of AssetsHolder.i() will be call while the screen dispose() executing.
 
-### main trouble:  
-use Android Profiler, Memory view, amount of meory will increase outstanding while you touch screen( switch screen code executing ).
+## main trouble:  
+Use Android Profiler, Memory view, amount of memory will increase outstanding while you touch screen( switch screen code executing ).

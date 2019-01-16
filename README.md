@@ -17,5 +17,5 @@ Main resources process: AssetsHolder.i().init( new AssetManager( ) );
 It will load a ttf font,and display nothing.
 And dispose() of AssetsHolder.i() will be call while the screen dispose() executing.
 
-## main trouble:  
+## Main trouble:  
 Use Android Profiler, Memory view, amount of memory will increase outstanding while you touch screen( switch screen code executing ).

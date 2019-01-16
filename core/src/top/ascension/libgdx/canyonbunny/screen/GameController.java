@@ -5,9 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import javafx.event.Event;
-import javafx.event.EventDispatchChain;
-import top.ascension.libgdx.canyonbunny.GlobalRef;
 import top.ascension.libgdx.canyonbunny.Layout;
 import top.ascension.libgdx.canyonbunny.debug.DbgMark;
 import top.ascension.libgdx.canyonbunny.gamecell.IGameCell;
@@ -18,6 +15,7 @@ public class GameController extends InputAdapter {
     private static final String TAG = GameController.class.getSimpleName();
 
     private static final String ID_BACK_INTERVAL = "ID_BACK_INTERVAL";
+    private GameScreen ref_gameScreen;
 
     private TweenManager twnmgr;
     OrthographicCamera cmrGame;
@@ -26,7 +24,8 @@ public class GameController extends InputAdapter {
 
     private IGameCell gameCell; /// full control, include dispose
 
-    public GameController( IGameCell gameCell ) {
+    public GameController( IGameCell gameCell, GameScreen gameScreen ) {
+        this.ref_gameScreen = gameScreen;
         initAndReset( gameCell );
     }
 
@@ -101,7 +100,8 @@ public class GameController extends InputAdapter {
         uninit();
 
         Gdx.app.log( TAG + DbgMark.FLOW, "leaveScreen() " );
-        GlobalRef.gameHost.leaveScreen();
+        this.ref_gameScreen.leaveScreen();
+        this.ref_gameScreen = null;
     }
 
 

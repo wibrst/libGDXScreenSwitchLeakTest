@@ -1,15 +1,21 @@
 package top.ascension.libgdx.canyonbunny.screen;
 
-import top.ascension.libgdx.canyonbunny.GlobalRef;
+import top.ascension.libgdx.canyonbunny.ScreenSwitchLeakTest;
 import top.ascension.libgdx.canyonbunny.gamecell.FreeXBlocks;
 import top.ascension.libgdx.canyonbunny.gamecell.IGameCell;
 
 public class GameScreen extends AbstScreen {
 
     protected static final String TAG = GameScreen.class.getSimpleName( );
+    private GameController gmctllr;
 
+    private ScreenSwitchLeakTest ref_game;
     private GameRenderer gmrdrr;
     private boolean bRunning;
+
+    GameScreen( ScreenSwitchLeakTest game ){
+        this.ref_game = game;
+    }
 
     @Override
     public void show( ) {
@@ -18,22 +24,27 @@ public class GameScreen extends AbstScreen {
         /// current using
         IGameCell gameCell = new FreeXBlocks();
 
-        gmrdrr = new GameRenderer( gameCell );
-        GlobalRef.gmctllr = new GameController( gameCell );
+        gmctllr = new GameController( gameCell, this );
+        gmrdrr = new GameRenderer( gameCell, gmctllr );
 
         bRunning = true;
     }
 
+    public void leaveScreen( ) {
+        this.ref_game.leaveScreen( this );
+        this.ref_game = null;
+    }
+
     @Override
     protected void readyRender( float delta ) {
-        if ( bRunning ) GlobalRef.gmctllr.updateForRender( delta );
+        if ( bRunning ) gmctllr.updateForRender( delta );
         gmrdrr.render( );
     }
 
     @Override
     public void resize( int width, int height ) {
         super.resize( width, height );
-        GlobalRef.gmctllr.resize( width, height );
+        gmctllr.resize( width, height );
     }
 
     @Override
@@ -56,6 +67,7 @@ public class GameScreen extends AbstScreen {
 
     @Override
     public void dispose( ) {
+        this.ref_game = null;
         super.dispose( );
     }
 }

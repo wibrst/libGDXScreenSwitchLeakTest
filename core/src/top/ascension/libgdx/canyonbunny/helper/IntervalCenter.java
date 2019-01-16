@@ -50,6 +50,7 @@ public class IntervalCenter {
     public void dispose( ) {
         map.clear( );
         _i = null;
+        Gdx.app.log( TAG + DbgMark.FLOW, "dispose() ---  _i =" + _i );
     }
 
     /// for leak debug

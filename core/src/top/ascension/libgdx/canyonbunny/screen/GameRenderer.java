@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
-import top.ascension.libgdx.canyonbunny.GlobalRef;
 import top.ascension.libgdx.canyonbunny.Layout;
 import top.ascension.libgdx.canyonbunny.gamecell.IGameCell;
 import top.ascension.libgdx.canyonbunny.ui.AssetsHolder;
@@ -15,17 +14,19 @@ import top.ascension.libgdx.canyonbunny.ui.FontsManager;
 public class GameRenderer implements Disposable {
     private static final String TAG = GameRenderer.class.getSimpleName( );
 
-    private IGameCell gameCell;
+    private IGameCell ref_gameCell;
+    private GameController ref_gameController;
 
     private SpriteBatch batch;
     private Texture img;
 
-    public GameRenderer( IGameCell gameCell ) {
-        init( gameCell );
+    public GameRenderer( IGameCell gameCell, GameController gameController ) {
+        init( gameCell, gameController );
     }
 
-    private void init( IGameCell gameCell ) {
-        this.gameCell = gameCell;
+    private void init( IGameCell gameCell, GameController gameController ) {
+        this.ref_gameCell = gameCell;
+        this.ref_gameController = gameController;
 
         batch = new SpriteBatch( );
         img = new Texture( "libgdx.png" );
@@ -37,13 +38,13 @@ public class GameRenderer implements Disposable {
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
 
         /// render gameHost cell
-        batch.setProjectionMatrix( GlobalRef.gmctllr.cmrGame.combined );
+        batch.setProjectionMatrix( this.ref_gameController.cmrGame.combined );
         batch.begin( );
-        gameCell.render( batch );
+        ref_gameCell.render( batch );
         batch.end( );
 
         /// render GUI
-        batch.setProjectionMatrix( GlobalRef.gmctllr.cmrGUI.combined );
+        batch.setProjectionMatrix( this.ref_gameController.cmrGUI.combined );
         batch.begin( );
         renderFPS( batch );
         batch.end( );
@@ -69,6 +70,8 @@ public class GameRenderer implements Disposable {
      */
     @Override
     public void dispose( ) {
+        this.ref_gameCell = null;
+        this.ref_gameController = null;
         batch.dispose( );
         img.dispose( );
     }

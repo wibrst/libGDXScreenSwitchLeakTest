@@ -3,8 +3,10 @@ package top.ascension.libgdx.canyonbunny;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import top.ascension.libgdx.canyonbunny.helper.ILeakCanaryHolder;
 import top.ascension.libgdx.canyonbunny.screen.EmptyScreen;
+import top.ascension.libgdx.canyonbunny.screen.GameScreen;
 import top.ascension.libgdx.canyonbunny.screen.MenuScreen;
 import top.ascension.libgdx.canyonbunny.status.LeaveStatus;
 import top.ascension.libgdx.canyonbunny.status.ScreenList;
@@ -18,7 +20,7 @@ public class ScreenSwitchLeakTest extends Game {
     private boolean _bEmptyTest;
 
     public ScreenSwitchLeakTest( ILeakCanaryHolder leakCanaryHolder ) {
-        GlobalRef.lch = leakCanaryHolder;
+        // GlobalRef.lch = leakCanaryHolder;
 
         _bEmptyTest = true;
         _iCurrScreen = ScreenList.VERY_BEGIN;
@@ -32,19 +34,20 @@ public class ScreenSwitchLeakTest extends Game {
 
         Layout.SCREEN_H = Gdx.graphics.getHeight();
         Layout.SCREEN_W = Gdx.graphics.getWidth();
-        GlobalRef.gameHost = this;
+        // GlobalRef.gameHost = this;
 
         // SamplingProfilerFacade.init( 10, 1000, Thread.currentThread());
         // SamplingProfilerFacade.startSampling();
 
-        this.leaveScreen();
+        this.leaveScreen( null );
     }
 
-    public void leaveScreen( ) {
-        leaveScreen( LeaveStatus.NORMAL );
-    }
+    public void leaveScreen( Screen gameScreenWillLeave ) {
+        /// dispose the leaving screen!
+        if( gameScreenWillLeave !=null){
+            gameScreenWillLeave.dispose();
+        }
 
-    public void leaveScreen( int iLeaveStatus ) {
         /// Screen switch flow: VERY_BEGIN -> MENU_SCREEN -> EMPTY_SCREEN
         /// then roll back: MENU_SCREEN <--> EMPTY_SCREEN
         /// switch code is same at two place : Gdx.input.isTouched(),
@@ -53,12 +56,12 @@ public class ScreenSwitchLeakTest extends Game {
             case ScreenList.VERY_BEGIN:
             case ScreenList.EMPTY_SCREEN:    /// 空测试
                 _iCurrScreen = ScreenList.MENU_SCREEN;
-                setScreen( new MenuScreen() );
+                setScreen( new MenuScreen( this ) );
                 break;
 
             case ScreenList.MENU_SCREEN:
                 _iCurrScreen = ScreenList.EMPTY_SCREEN;
-                setScreen( new EmptyScreen() );
+                setScreen( new EmptyScreen( this ) );
                 break;
         }
     }

@@ -8,9 +8,11 @@ import com.badlogic.gdx.utils.Disposable;
 import top.ascension.libgdx.canyonbunny.ScreenSwitchLeakTest;
 import top.ascension.libgdx.canyonbunny.debug.DbgMark;
 
+import java.lang.ref.WeakReference;
+
 public class AssetsHolder implements Disposable, AssetErrorListener {
 
-    private static AssetsHolder _i;
+    static AssetsHolder _i;
 
     public static AssetsHolder i( ) {
         if ( _i == null )
@@ -18,7 +20,7 @@ public class AssetsHolder implements Disposable, AssetErrorListener {
         return _i;
     }
 
-    private static final String TAG = ScreenSwitchLeakTest.class.getSimpleName( );
+    private static final String TAG = AssetsHolder.class.getSimpleName( );
     public FontsManager fontsManager;
     private AssetManager assetManager;
 
@@ -56,7 +58,8 @@ public class AssetsHolder implements Disposable, AssetErrorListener {
     public void dispose( ) {
         assetManager.clear();
         assetManager.dispose( );
-        fontsManager.dispose( );
+        // fontsManager.dispose( ); // Pixmap already disposed!
         _i = null;
+        Gdx.app.log( TAG + DbgMark.FLOW, "dispose() ---  _i =" + _i );
     }
 }

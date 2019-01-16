@@ -54,9 +54,9 @@ public class AssetsHolder implements Disposable, AssetErrorListener {
 
     @Override
     public void dispose( ) {
+        fontsManager.clear( );
         assetManager.clear();
         assetManager.dispose( );
-        fontsManager.dispose( );
         _i = null;
     }
 }

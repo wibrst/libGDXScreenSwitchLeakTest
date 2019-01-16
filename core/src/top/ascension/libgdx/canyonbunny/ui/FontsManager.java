@@ -58,15 +58,16 @@ public class FontsManager {
         Gdx.app.log( TAG + DbgMark.ASSETS, "extractFontsWhileLoaded() --- font extract failed！" );
     }
 
-    public void dispose( ) {
-        fontGeomHolder.dispose( );
+    public void clear( ) {
+        fontGeomHolder.clear( );
         fontGeomHolder = null;
 
-        if ( bmfUINorm != null ) {
-            bmfUINorm.dispose( );
-            bmfUINorm = null;
-        }
-        Gdx.app.log( TAG + DbgMark.FLOW, "dispose() " );
+        /// Pixmap already disposed!
+        // if ( bmfUINorm != null ) {
+        //     bmfUINorm.dispose( );
+        //     bmfUINorm = null;
+        // }
+        Gdx.app.log( TAG + DbgMark.FLOW, "clear() " );
 
     }
 

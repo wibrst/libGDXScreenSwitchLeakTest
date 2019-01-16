@@ -42,8 +42,8 @@ public class ScreenSwitchLeakTest extends Game {
     }
 
     public void leaveScreen( Screen screen ) {
-        // if ( screen != null )
-        //     screen.dispose();
+        if ( screen != null )
+            screen.dispose();
         /// GameScreen switch flow: VERY_BEGIN -> MENU_SCREEN -> EMPTY_SCREEN
         /// then roll back: MENU_SCREEN <--> EMPTY_SCREEN
         /// switch code is same at two place : Gdx.input.isTouched(),

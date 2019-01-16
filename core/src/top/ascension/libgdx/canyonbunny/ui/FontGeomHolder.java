@@ -13,7 +13,7 @@ public class FontGeomHolder {
         fontGeomMap = new WeakHashMap<>( );
     }
 
-    public void dispose( ) {
+    public void clear( ) {
         fontGeomMap.clear( );
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import top.ascension.libgdx.canyonbunny.GlobalRef;
 import top.ascension.libgdx.canyonbunny.debug.DbgMark;
 import top.ascension.libgdx.canyonbunny.ui.AssetsHolder;
 
@@ -83,5 +84,9 @@ public abstract class AbstScreen implements Screen {
                 + this.getClass( ).getSimpleName( )
                 + "---------------------------------------------------------"
         );
+    }
+
+    public void leaveScreen( ) {
+        GlobalRef.gameHost.leaveScreen( this );
     }
 }

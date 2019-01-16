@@ -3,6 +3,7 @@ package top.ascension.libgdx.canyonbunny;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import top.ascension.libgdx.canyonbunny.helper.ILeakCanaryHolder;
 import top.ascension.libgdx.canyonbunny.screen.EmptyScreen;
 import top.ascension.libgdx.canyonbunny.screen.MenuScreen;
@@ -37,15 +38,13 @@ public class ScreenSwitchLeakTest extends Game {
         // SamplingProfilerFacade.init( 10, 1000, Thread.currentThread());
         // SamplingProfilerFacade.startSampling();
 
-        this.leaveScreen();
+        this.leaveScreen( null );
     }
 
-    public void leaveScreen( ) {
-        leaveScreen( LeaveStatus.NORMAL );
-    }
-
-    public void leaveScreen( int iLeaveStatus ) {
-        /// Screen switch flow: VERY_BEGIN -> MENU_SCREEN -> EMPTY_SCREEN
+    public void leaveScreen( Screen screen ) {
+        // if ( screen != null )
+        //     screen.dispose();
+        /// GameScreen switch flow: VERY_BEGIN -> MENU_SCREEN -> EMPTY_SCREEN
         /// then roll back: MENU_SCREEN <--> EMPTY_SCREEN
         /// switch code is same at two place : Gdx.input.isTouched(),
         /// respectively in class MenuScreen and EmptyScreen.

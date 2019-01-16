@@ -19,7 +19,7 @@ public class GameScreen extends AbstScreen {
         IGameCell gameCell = new FreeXBlocks();
 
         gmrdrr = new GameRenderer( gameCell );
-        GlobalRef.gmctllr = new GameController( gameCell );
+        GlobalRef.gmctllr = new GameController( gameCell, this );
 
         bRunning = true;
     }

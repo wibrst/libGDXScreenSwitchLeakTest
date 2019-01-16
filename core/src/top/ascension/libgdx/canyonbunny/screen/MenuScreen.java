@@ -25,7 +25,7 @@ public class MenuScreen extends AbstScreen {
         if ( Gdx.input.isTouched() ) {
             /// 当前只有两个屏幕，当屏幕增多时，需要加入参数，因为可能希望跳转至不同的目标屏幕
             /// 当前菜单屏幕没有需要dispose的对象，因此直接跳转
-            GlobalRef.gameHost.leaveScreen();
+            this.leaveScreen();
         }
     }
 

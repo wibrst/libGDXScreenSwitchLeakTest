@@ -4,10 +4,8 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import javafx.event.Event;
-import javafx.event.EventDispatchChain;
-import top.ascension.libgdx.canyonbunny.GlobalRef;
 import top.ascension.libgdx.canyonbunny.Layout;
 import top.ascension.libgdx.canyonbunny.debug.DbgMark;
 import top.ascension.libgdx.canyonbunny.gamecell.IGameCell;
@@ -25,8 +23,10 @@ public class GameController extends InputAdapter {
     private CameraHelper cmrHpr;
 
     private IGameCell gameCell; /// full control, include dispose
+    private AbstScreen ref_Screen;
 
-    public GameController( IGameCell gameCell ) {
+    public GameController( IGameCell gameCell, AbstScreen screen ) {
+        ref_Screen = screen;
         initAndReset( gameCell );
     }
 
@@ -101,7 +101,7 @@ public class GameController extends InputAdapter {
         uninit();
 
         Gdx.app.log( TAG + DbgMark.FLOW, "leaveScreen() " );
-        GlobalRef.gameHost.leaveScreen();
+        ref_Screen.leaveScreen();
     }
 
 

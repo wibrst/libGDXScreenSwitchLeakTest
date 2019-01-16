@@ -21,7 +21,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "top.ascension.libgdx.canyonbunny"
+        applicationId "top.ascension.libgdx.screenSwitchLeak"
         minSdkVersion 9
         targetSdkVersion 27
         versionCode 1
